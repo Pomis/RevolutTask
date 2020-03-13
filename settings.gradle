@@ -1,0 +1,14 @@
+include ':app'
+rootProject.name='RevolutCurrencies'
+
+include ':currencies-core', ':currencies-android'
+project(':currencies-core').projectDir = file('currencies/core')
+project(':currencies-android').projectDir = file('currencies/android')
+
+include ':data-core', ':data-android'
+project(':data-core').projectDir = file('data/core')
+project(':data-android').projectDir = file('data/android')
+
+include ':common-core', ':common-android'
+project(':common-core').projectDir = file('common/core')
+project(':common-android').projectDir = file('common/android')

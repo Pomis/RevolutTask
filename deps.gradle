@@ -1,0 +1,32 @@
+ext {
+
+    kotlin = [
+            dependencies.create("org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"),
+            dependencies.create("org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlin_coroutines_version")
+    ]
+
+    recycler = dependencies.create("androidx.recyclerview:recyclerview:$androidx_version") {
+        exclude group: 'androidx.lifecycle'
+    }
+
+    constraint = dependencies.create("androidx.constraintlayout:constraintlayout:$constraint_layout_version")
+
+    crashlytics = dependencies.create("com.crashlytics.sdk.android:crashlytics:$firebase_crashlytics_version")
+
+    appcompat = dependencies.create("androidx.appcompat:appcompat:$androidx_version") {
+        exclude group: "androidx.lifecycle"
+        exclude group: "androidx.annotation:annotation"
+    }
+
+    kodein = dependencies.create("org.kodein.di:kodein-di-erased:$kodein_version")
+
+    retrofit = [
+            dependencies.create("com.squareup.retrofit2:retrofit:$retrofit_version"),
+            dependencies.create("com.squareup.retrofit2:converter-gson:$retrofit_version")
+    ]
+    
+    coroutines = dependencies.create("org.jetbrains.kotlinx:kotlinx-coroutines-android:${kotlin_coroutines_version}")
+
+    gson = dependencies.create("com.google.code.gson:gson:$gson_version")
+
+}
