@@ -28,9 +28,11 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(':common-core')
     implementation project(':currencies-core')
 
     implementation kotlin
+    implementation kodein
     implementation retrofit
 
     implementation 'androidx.appcompat:appcompat:1.0.2'

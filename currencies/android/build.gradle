@@ -29,8 +29,10 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':currencies-core')
+    implementation project(':common-android')
 
     implementation kotlin
+    implementation kodein
     implementation recycler
     implementation constraint
 

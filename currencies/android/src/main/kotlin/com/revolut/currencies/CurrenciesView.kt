@@ -1,11 +1,25 @@
 package com.revolut.currencies
 
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import kotlinx.android.synthetic.main.activity_currencies.view.*
 
 class CurrenciesView(
-    private val viewGroup: ViewGroup
+    private val viewGroup: ViewGroup,
+    private val adapter: CurrenciesAdapter
 ) : CurrenciesContract.View {
-    override fun init(currenciesPresenter: CurrenciesContract.Presenter) {
 
+    lateinit var presenter: CurrenciesContract.Presenter
+
+    override fun init(currenciesPresenter: CurrenciesContract.Presenter) {
+        this.presenter = currenciesPresenter
+        adapter.presenter = currenciesPresenter
+        viewGroup.rv_currencies.adapter = adapter
+        viewGroup.rv_currencies.layoutManager = LinearLayoutManager(viewGroup.context)
     }
+
+    override fun updateData() {
+        adapter.notifyDataSetChanged()
+    }
+
 }

@@ -9,8 +9,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class NetworkAndroidModule {
-    val kodein = Kodein.Module("") {
-        bind<CurrenciesContract.NetworkInteractor>() with singleton {
+    val kodein = Kodein.Module("network_android") {
+        bind() from singleton {
             Retrofit.Builder()
                 .baseUrl("https://hiring.revolut.codes/api/")
                 .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
