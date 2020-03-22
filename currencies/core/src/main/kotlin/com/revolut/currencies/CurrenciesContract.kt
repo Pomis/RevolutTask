@@ -10,6 +10,7 @@ interface CurrenciesContract {
         fun notifyItemMovedOnTop(position: Int)
 
         fun updateItem(position: Int)
+        fun showError()
     }
 
     interface Presenter {
@@ -33,8 +34,8 @@ interface CurrenciesContract {
     }
 
     interface DatabaseInteractor {
-        suspend fun getSelectedCurrency(): CurrencyModel
-        suspend fun getLastRates(): RatesResponse
+        suspend fun getLastSavedRates(): Map<String, Float>
+        suspend fun saveRates(rates: Map<String, Float>)
     }
 
     interface Orchestrator {

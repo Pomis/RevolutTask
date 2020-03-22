@@ -32,4 +32,7 @@ class CurrenciesView(
         adapter.notifyItemMoved(1, position)
     }
 
+    override fun showError() {
+
+    }
 }

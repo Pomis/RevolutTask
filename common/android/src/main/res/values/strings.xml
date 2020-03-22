@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="currency_value_hint" translatable="false">0</string>
+    <string name="error_loading">Could not load currencies and cached version is not available</string>
+    <string name="load_again">Load again</string>
+</resources>

@@ -26,6 +26,9 @@ class CurrenciesPresenter(
         launch {
             while (isActive) {
                 val rates = orchestrator.getLatestRates()
+                if (rates.isEmpty()) {
+                    view.showError()
+                }
                 latestRates = rates
                 updateModel(rates)
                 delay(CurrenciesDefaultConfig.RefreshTimeoutMillis)
