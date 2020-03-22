@@ -2,6 +2,7 @@ package com.revolut.currencies
 
 import android.os.Bundle
 import com.revolut.common.BaseActivity
+import com.revolut.common.hideKeyboard
 import com.revolut.currencies.core.R
 import org.kodein.di.erased.instance
 
@@ -14,6 +15,11 @@ class CurrenciesActivity : BaseActivity() {
         setContentView(R.layout.activity_currencies)
         kodein = components.currenciesComponent(this)
         presenter.init()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        hideKeyboard()
     }
 
 }

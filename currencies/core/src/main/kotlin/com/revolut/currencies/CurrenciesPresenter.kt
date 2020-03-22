@@ -25,7 +25,9 @@ class CurrenciesPresenter(
     private fun subscribeOnRateUpdates() {
         launch {
             while (isActive) {
-                val rates = orchestrator.getLatestRates()
+                val rates = withContext(Dispatchers.IO) {
+                    orchestrator.getLatestRates()
+                }
                 if (rates.isEmpty()) {
                     view.showError()
                 }

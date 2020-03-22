@@ -1,7 +1,5 @@
 package com.revolut.currencies
 
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import java.io.IOException
 
 class CurrenciesOrchestrator(
@@ -22,10 +20,7 @@ class CurrenciesOrchestrator(
             databaseInteractor.saveRates(rates)
             rates
         } catch (e: IOException) {
-            e.printStackTrace()
-            withContext(Dispatchers.IO) {
-                databaseInteractor.getLastSavedRates()
-            }
+            databaseInteractor.getLastSavedRates()
         }
     }
 

@@ -1,14 +1,14 @@
 package com.revolut.database
 
-import androidx.room.Dao
-import androidx.room.Query
-import androidx.room.Update
+import androidx.room.*
 
 @Dao
 interface CurrenciesDao {
+
     @Query("SELECT * FROM currencies")
     fun getCurrencies() : List<CurrencyEntity>
 
-    @Update
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun updateCurrencies(currencies: List<CurrencyEntity>)
+
 }
