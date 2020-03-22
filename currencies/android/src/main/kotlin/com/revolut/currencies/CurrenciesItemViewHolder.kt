@@ -28,11 +28,12 @@ class CurrenciesItemViewHolder(
     private val currencyName = itemView.tv_currency_item_name
     private val currencyFlag = itemView.iv_currency_item_flag
     private val currencyAmount = itemView.et_currency_item_amount
+    //TODO: handle click on currencyAmount
 
     init {
         currencyAmount.setOnUserChangedTextListener {
             if (adapterPosition == 0) {
-                presenter.onBaseCurrencyAmountEdited(it))
+                presenter.onBaseCurrencyAmountEdited(it)
             }
         }
     }
