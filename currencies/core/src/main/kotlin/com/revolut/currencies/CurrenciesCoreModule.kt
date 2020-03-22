@@ -14,7 +14,7 @@ class CurrenciesCoreModule {
             CurrenciesPresenter(instance(), instance(), instance())
         }
         bind<Orchestrator>() with singleton {
-            CurrenciesOrchestrator()
+            CurrenciesOrchestrator(instance())
         }
     }
 }

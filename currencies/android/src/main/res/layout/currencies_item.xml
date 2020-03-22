@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/appCompatImageView"
+        android:id="@+id/iv_currency_item_flag"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_margin="16dp"
@@ -16,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tv_currency_item_code"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -24,11 +24,12 @@
         android:lineSpacingExtra="5sp"
         android:textColor="#191C1F"
         android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/appCompatImageView"
+        app:layout_constraintStart_toEndOf="@+id/iv_currency_item_flag"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="EUR" />
 
     <TextView
+        android:id="@+id/tv_currency_item_name"
         android:layout_width="0dp"
         android:layout_marginBottom="16dp"
         android:textColor="#8B959E"
@@ -36,12 +37,15 @@
         android:layout_marginStart="16dp"
         android:lineSpacingExtra="5sp"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@+id/appCompatImageView"
+        app:layout_constraintStart_toEndOf="@+id/iv_currency_item_flag"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:text="Euro" />
 
     <EditText
+        android:id="@+id/et_currency_item_amount"
         android:layout_width="wrap_content"
+        android:hint="0"
+        android:inputType="numberDecimal"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         app:layout_constraintBottom_toBottomOf="parent"

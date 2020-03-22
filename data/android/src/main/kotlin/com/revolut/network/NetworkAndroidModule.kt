@@ -4,6 +4,7 @@ import com.google.gson.GsonBuilder
 import com.revolut.currencies.CurrenciesContract
 import org.kodein.di.Kodein
 import org.kodein.di.erased.bind
+import org.kodein.di.erased.instance
 import org.kodein.di.erased.singleton
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -16,6 +17,10 @@ class NetworkAndroidModule {
                 .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
                 .build()
                 .create(RevolutService::class.java)
+        }
+
+        bind<CurrenciesContract.NetworkInteractor>() with singleton {
+            CurrenciesNetworkInteractor(instance())
         }
     }
 }

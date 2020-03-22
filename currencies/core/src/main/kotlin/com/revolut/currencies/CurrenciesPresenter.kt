@@ -4,6 +4,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.*
 
 class CurrenciesPresenter(
     private val view: CurrenciesContract.View,
@@ -11,12 +12,12 @@ class CurrenciesPresenter(
     coroutineScope: CoroutineScope
 ) : CurrenciesContract.Presenter, CoroutineScope by coroutineScope {
 
-    private var currencies: List<CurrencyModel>? = null
+    private var currencies: MutableList<CurrencyModel>? = null
 
     override fun init() {
         view.init(this)
         launch {
-            currencies = orchestrator.getCurrencies()
+            currencies = orchestrator.getCurrencies().toMutableList()
             withContext(Dispatchers.Main) {
                 view.updateData()
             }
@@ -26,8 +27,14 @@ class CurrenciesPresenter(
     override fun bindItem(itemView: CurrenciesContract.ItemView, position: Int) {
         currencies?.apply {
             itemView.setCurrencyCode(get(position).base)
-            itemView.setCurrencyName(get(position).base)
-//            view.updateData()
+            itemView.setCurrencyAmount(get(position).amount)
+        }
+    }
+
+    override fun onCurrencyClicked(position: Int) {
+        currencies?.let {
+            Collections.swap(it, position, 0)
+            view.notifyItemMovedOnTop(position)
         }
     }
 

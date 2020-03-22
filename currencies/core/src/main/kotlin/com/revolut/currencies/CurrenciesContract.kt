@@ -4,6 +4,8 @@ interface CurrenciesContract {
     interface View {
         fun init(currenciesPresenter: Presenter)
         fun updateData()
+//        fun moveOnTop(position: Int)
+        fun notifyItemMovedOnTop(position: Int)
     }
 
     interface Presenter {
@@ -11,11 +13,14 @@ interface CurrenciesContract {
 
         fun init()
         fun bindItem(itemView: ItemView, position: Int)
+        fun onCurrencyClicked(position: Int)
     }
 
     interface ItemView {
         fun setCurrencyCode(code: String)
         fun setCurrencyName(name: String)
+        fun setCurrencyAmount(amount: Float)
+        fun startEditing()
     }
 
     interface NetworkInteractor {
@@ -29,7 +34,7 @@ interface CurrenciesContract {
 
     interface Orchestrator {
         fun getSelectedCurrency()
-        fun getCurrencies(): List<CurrencyModel>
+        suspend fun getCurrencies(): List<CurrencyModel>
     }
 
     companion object {

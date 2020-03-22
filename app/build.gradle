@@ -26,6 +26,10 @@ android {
     sourceSets.all {
         it.java.srcDir "src/${it.name}/kotlin"
     }
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
 }
 
 dependencies {

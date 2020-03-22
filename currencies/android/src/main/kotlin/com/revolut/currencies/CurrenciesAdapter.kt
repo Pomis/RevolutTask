@@ -11,6 +11,7 @@ class CurrenciesAdapter() : RecyclerView.Adapter<CurrenciesItemViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CurrenciesItemViewHolder {
         return CurrenciesItemViewHolder(
+            presenter,
             LayoutInflater.from(parent.context)
                 .inflate(R.layout.currencies_item, parent, false)
         )
@@ -22,5 +23,9 @@ class CurrenciesAdapter() : RecyclerView.Adapter<CurrenciesItemViewHolder>() {
 
     override fun onBindViewHolder(holder: CurrenciesItemViewHolder, position: Int) {
         presenter.bindItem(holder, position)
+        holder.itemView.setOnClickListener {
+            holder.startEditing()
+            presenter.onCurrencyClicked(holder.adapterPosition)
+        }
     }
 }

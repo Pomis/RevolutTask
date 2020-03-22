@@ -1,16 +1,21 @@
 package com.revolut.currencies
 
-class CurrenciesOrchestrator: CurrenciesContract.Orchestrator {
+import java.lang.Exception
+
+class CurrenciesOrchestrator(
+    private val newtworkInteractor: CurrenciesContract.NetworkInteractor
+): CurrenciesContract.Orchestrator {
     override fun getSelectedCurrency() {
 
     }
 
-    override fun getCurrencies(): List<CurrencyModel> {
-        return listOf(
-            CurrencyModel("USD", 123f),
-            CurrencyModel("EUR", 213f),
-            CurrencyModel("AUD", 122f),
-            CurrencyModel("RUB", 103f)
-        )
+    override suspend fun getCurrencies(): List<CurrencyModel> {
+        return try {
+            newtworkInteractor.getRates("USD")
+                .rates.map { CurrencyModel(it.key, it.value) }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            listOf()
+        }
     }
 }

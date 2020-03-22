@@ -29,4 +29,6 @@ ext {
 
     gson = dependencies.create("com.google.code.gson:gson:$gson_version")
 
+    currencyPicker = dependencies.create('com.github.midorikocak:currency-picker-android:1.2.1')
+
 }
