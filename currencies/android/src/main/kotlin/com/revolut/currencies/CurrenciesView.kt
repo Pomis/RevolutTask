@@ -22,9 +22,14 @@ class CurrenciesView(
         adapter.notifyDataSetChanged()
     }
 
+    override fun updateItem(position: Int) {
+        adapter.notifyItemChanged(position, 0)
+    }
+
     override fun notifyItemMovedOnTop(position: Int) {
         viewGroup.rv_currencies.layoutManager?.scrollToPosition(0)
         adapter.notifyItemMoved(position, 0)
+        adapter.notifyItemMoved(1, position)
     }
 
 }

@@ -1,11 +1,15 @@
 package com.revolut.currencies
 
+import kotlinx.coroutines.channels.ReceiveChannel
+
 interface CurrenciesContract {
     interface View {
         fun init(currenciesPresenter: Presenter)
         fun updateData()
-//        fun moveOnTop(position: Int)
+        //        fun moveOnTop(position: Int)
         fun notifyItemMovedOnTop(position: Int)
+
+        fun updateItem(position: Int)
     }
 
     interface Presenter {
@@ -14,6 +18,7 @@ interface CurrenciesContract {
         fun init()
         fun bindItem(itemView: ItemView, position: Int)
         fun onCurrencyClicked(position: Int)
+        fun onBaseCurrencyAmountEdited(newValue: String?)
     }
 
     interface ItemView {
@@ -33,8 +38,8 @@ interface CurrenciesContract {
     }
 
     interface Orchestrator {
-        fun getSelectedCurrency()
-        suspend fun getCurrencies(): List<CurrencyModel>
+//        suspend fun getInitialCurrencies(): MutableList<CurrencyModel>
+        suspend fun getLatestRates(): Map<String, Float>
     }
 
     companion object {

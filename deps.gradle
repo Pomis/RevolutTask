@@ -31,4 +31,11 @@ ext {
 
     currencyPicker = dependencies.create('com.github.midorikocak:currency-picker-android:1.2.1')
 
+    room = [
+            dependencies.create("androidx.room:room-runtime:$room_version"),
+            dependencies.create("androidx.room:room-ktx:$room_version")
+    ]
+
+    roomCodeGen = dependencies.create("androidx.room:room-compiler:$room_version")
+
 }
