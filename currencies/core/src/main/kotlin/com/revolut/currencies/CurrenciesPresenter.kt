@@ -1,5 +1,6 @@
 package com.revolut.currencies
 
+import com.revolut.common.CommonContract
 import kotlinx.coroutines.*
 import java.text.NumberFormat
 import java.text.ParseException
@@ -8,8 +9,8 @@ import java.util.*
 class CurrenciesPresenter(
     private val view: CurrenciesContract.View,
     private val orchestrator: CurrenciesContract.Orchestrator,
-    coroutineScope: CoroutineScope
-) : CurrenciesContract.Presenter, CoroutineScope by coroutineScope {
+    coroutineScope: CommonContract.Scope
+) : CurrenciesContract.Presenter, CommonContract.Scope by coroutineScope {
 
     private var latestRates: Map<String, Float>? = null
     private var model: MutableList<CurrencyModel>? = null
@@ -25,14 +26,10 @@ class CurrenciesPresenter(
     private fun subscribeOnRateUpdates() {
         launch {
             while (isActive) {
-                val rates = withContext(Dispatchers.IO) {
-                    orchestrator.getLatestRates()
-                }
-                if (rates.isEmpty()) {
-                    view.showError()
-                }
+                val rates = io { orchestrator.getLatestRates() }
+                if (rates.isEmpty()) { view.showError() }
                 latestRates = rates
-                updateModel(rates)
+                io { updateModel(rates) }
                 delay(CurrenciesDefaultConfig.RefreshTimeoutMillis)
             }
         }
@@ -45,9 +42,7 @@ class CurrenciesPresenter(
                     (rates.getValue(it.currencyCode) / rates.getValue(
                         selectedCurrency.currencyCode
                     )) * selectedCurrency.amount
-                withContext(Dispatchers.Main) {
-                    view.updateItem(index)
-                }
+                ui { view.updateItem(index) }
             }
         } ?: run {
             model = rates.map { CurrencyModel(it.key, it.value) }.toList().toMutableList()

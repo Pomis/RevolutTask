@@ -1,12 +1,9 @@
 package com.revolut.common
 
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
-class CancelableCoroutineScope() : CoroutineScope {
+class CancelableCoroutineScope() : CommonContract.Scope {
 
     private val job = Job()
 
@@ -16,5 +13,17 @@ class CancelableCoroutineScope() : CoroutineScope {
     fun cancel() {
         job.cancel()
     }
+
+    override suspend fun <T> ui(block: suspend CoroutineScope.() -> T) =
+        withContext(Dispatchers.Main) {
+            block()
+        }
+
+    override suspend fun <T> io(block: suspend CoroutineScope.() -> T) =
+        withContext(Dispatchers.IO) {
+            block()
+        }
+
+
 
 }

@@ -6,7 +6,7 @@ import org.kodein.di.Kodein
 import org.kodein.di.erased.bind
 import org.kodein.di.erased.singleton
 
-class CommonAndroidModule {
+class CommonCoreModule {
 
     val kodein = Kodein.Module(MODULE_COMMON_CORE) {
         bind() from singleton { CancelableCoroutineScope() }
