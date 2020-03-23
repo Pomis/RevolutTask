@@ -24,6 +24,4 @@ class CancelableCoroutineScope() : CommonContract.Scope {
             block()
         }
 
-
-
 }

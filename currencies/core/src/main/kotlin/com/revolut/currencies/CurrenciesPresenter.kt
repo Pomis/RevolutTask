@@ -1,9 +1,8 @@
 package com.revolut.currencies
 
 import com.revolut.common.CommonContract
+import com.revolut.common.toFloatSafe
 import kotlinx.coroutines.*
-import java.text.NumberFormat
-import java.text.ParseException
 import java.util.*
 
 class CurrenciesPresenter(
@@ -14,7 +13,7 @@ class CurrenciesPresenter(
 
     private var latestRates: Map<String, Float>? = null
     private var model: MutableList<CurrencyModel>? = null
-    private var selectedCurrency: CurrencyModel = CurrenciesDefaultConfig.DefaultCurrency
+    private var base: CurrencyModel = CurrenciesDefaultConfig.DefaultCurrency
 
     override fun init() {
         view.init(this)
@@ -27,7 +26,9 @@ class CurrenciesPresenter(
         launch {
             while (isActive) {
                 val rates = io { orchestrator.getLatestRates() }
-                if (rates.isEmpty()) { view.showError() }
+                if (rates.isEmpty()) {
+                    view.showError()
+                }
                 latestRates = rates
                 io { updateModel(rates) }
                 delay(CurrenciesDefaultConfig.RefreshTimeoutMillis)
@@ -36,43 +37,48 @@ class CurrenciesPresenter(
     }
 
     private suspend fun updateModel(rates: Map<String, Float>) {
-        model?.forEachIndexed { index, it ->
-            if (it.currencyCode != selectedCurrency.currencyCode) {
-                it.amount =
-                    (rates.getValue(it.currencyCode) / rates.getValue(
-                        selectedCurrency.currencyCode
-                    )) * selectedCurrency.amount
-                ui { view.updateItem(index) }
+        val currentModel = model
+        if (currentModel != null && currentModel.isNotEmpty()) {
+            currentModel.forEachIndexed { index, it ->
+                if (it.currencyCode != base.currencyCode) {
+                    val exchangeRate = rates.getValue(it.currencyCode) / rates.getValue(base.currencyCode)
+                    it.amount = exchangeRate * base.amount
+                    ui { view.updateItem(index) }
+                }
             }
-        } ?: run {
+            ui { view.hideError() }
+        } else {
             model = rates.map { CurrencyModel(it.key, it.value) }.toList().toMutableList()
         }
     }
 
     override fun bindItem(itemView: CurrenciesContract.ItemView, position: Int) {
+
         model?.apply {
-            itemView.setCurrencyCode(get(position).currencyCode)
-            itemView.setCurrencyAmount(get(position).amount)
+            val currencyModel = get(position)
+            val displayName = Currency.getAvailableCurrencies().find {
+                it.currencyCode == currencyModel.currencyCode
+            }?.displayName
+
+            itemView.setCurrencyCode(currencyModel.currencyCode)
+            displayName?.let { itemView.setCurrencyName(it) }
+            itemView.setCurrencyAmount(currencyModel.amount)
         }
     }
 
-    override fun onCurrencyClicked(position: Int) {
-        model?.let {
-            Collections.swap(it, position, 0)
-            selectedCurrency = it[0]
-            view.notifyItemMovedOnTop(position)
+    override fun onCurrencyClicked(itemView: CurrenciesContract.ItemView, position: Int) {
+        if (position != 0) {
+            model?.let {
+                Collections.swap(it, position, 0)
+                base = it[0]
+                view.notifyItemMovedOnTop(position)
+                itemView.startEditing()
+            }
         }
     }
 
     override fun onBaseCurrencyAmountEdited(newValue: String?) {
-        val format = NumberFormat.getInstance(Locale.getDefault())
-        val amount = if (newValue != null) {
-            val number = try { format.parse(newValue.toString()) } catch (e: ParseException) { 0 }
-            number?.toFloat() ?: 0f
-        } else {
-            0f
-        }
-        selectedCurrency.amount = amount
+        base.amount = newValue.toFloatSafe()
         launch {
             latestRates?.let { updateModel(it) }
         }

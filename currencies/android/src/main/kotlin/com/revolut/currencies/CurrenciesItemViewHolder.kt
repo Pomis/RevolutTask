@@ -28,7 +28,7 @@ class CurrenciesItemViewHolder(
     private val currencyName = itemView.tv_currency_item_name
     private val currencyFlag = itemView.iv_currency_item_flag
     private val currencyAmount = itemView.et_currency_item_amount
-    //TODO: handle click on currencyAmount
+    private val clickIntercepter = itemView.v_currency_item_amount_click_intercepter
 
     init {
         currencyAmount.setOnUserChangedTextListener {
@@ -36,10 +36,12 @@ class CurrenciesItemViewHolder(
                 presenter.onBaseCurrencyAmountEdited(it)
             }
         }
+        clickIntercepter.setOnClickListener {
+            presenter.onCurrencyClicked(this, adapterPosition)
+        }
     }
 
     override fun setCurrencyCode(code: String) {
-        val currency = Currency.getAvailableCurrencies().find { it.currencyCode == code }
         currencyFlag.setImageDrawable(
             itemView.context.getDrawable(
                 ExtendedCurrency.getCurrencyByISO(
@@ -48,10 +50,10 @@ class CurrenciesItemViewHolder(
             )
         )
         currencyCode.text = code
-        currencyName.text = currency?.displayName
     }
 
     override fun setCurrencyName(name: String) {
+        currencyName.text = name
     }
 
     override fun setCurrencyAmount(amount: Float) {
@@ -61,6 +63,6 @@ class CurrenciesItemViewHolder(
     override fun startEditing() {
         currencyAmount.requestFocus()
         currencyAmount.setSelection(currencyAmount.text.length)
-        itemView.context.showKeyboard()
+        currencyAmount.showKeyboard()
     }
 }

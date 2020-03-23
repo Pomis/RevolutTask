@@ -1,17 +1,17 @@
-### Test task for Android developer position in Revolut bank  
+## Test task for Android developer position in Revolut bank  
 
 Technologies and approaches used:
-####Libraries:  
+### Libraries:  
 - Coroutines
 - Room
 - Retrofit
 - Kodein
 
-####Testing libraries:  
+### Testing libraries:  
 - JUnit
 - Mockito
 - Kaspresso
 
-####Architecture:  
+## Architecture:  
 - MVP
 - Multi-modularity

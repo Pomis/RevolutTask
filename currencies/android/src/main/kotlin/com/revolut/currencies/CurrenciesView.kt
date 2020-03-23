@@ -1,5 +1,7 @@
 package com.revolut.currencies
 
+import android.opengl.Visibility
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_currencies.view.*
@@ -33,6 +35,10 @@ class CurrenciesView(
     }
 
     override fun showError() {
+        viewGroup.tv_currencies_load_error.visibility = View.VISIBLE
+    }
 
+    override fun hideError() {
+        viewGroup.tv_currencies_load_error.visibility = View.GONE
     }
 }

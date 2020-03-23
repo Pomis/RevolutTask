@@ -24,8 +24,7 @@ class CurrenciesAdapter() : RecyclerView.Adapter<CurrenciesItemViewHolder>() {
     override fun onBindViewHolder(holder: CurrenciesItemViewHolder, position: Int) {
         presenter.bindItem(holder, position)
         holder.itemView.setOnClickListener {
-            holder.startEditing()
-            presenter.onCurrencyClicked(holder.adapterPosition)
+            presenter.onCurrencyClicked(holder, holder.adapterPosition)
         }
     }
 }
