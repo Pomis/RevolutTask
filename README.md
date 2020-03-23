@@ -12,6 +12,6 @@ Technologies and approaches used:
 - Mockito
 - Kaspresso
 
-## Architecture:  
+### Architecture: 
 - MVP
 - Multi-modularity
