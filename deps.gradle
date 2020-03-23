@@ -13,10 +13,7 @@ ext {
 
     crashlytics = dependencies.create("com.crashlytics.sdk.android:crashlytics:$firebase_crashlytics_version")
 
-    appcompat = dependencies.create("androidx.appcompat:appcompat:$androidx_version") {
-        exclude group: "androidx.lifecycle"
-        exclude group: "androidx.annotation:annotation"
-    }
+    appcompat = dependencies.create("androidx.appcompat:appcompat:$androidx_version")
 
     kodein = dependencies.create("org.kodein.di:kodein-di-erased:$kodein_version")
 
@@ -29,7 +26,7 @@ ext {
 
     gson = dependencies.create("com.google.code.gson:gson:$gson_version")
 
-    currencyPicker = dependencies.create('com.github.midorikocak:currency-picker-android:1.2.1')
+    currencyPicker = dependencies.create("com.github.midorikocak:currency-picker-android:$currency_picker_version")
 
     room = [
             dependencies.create("androidx.room:room-runtime:$room_version"),
@@ -37,5 +34,22 @@ ext {
     ]
 
     roomCodeGen = dependencies.create("androidx.room:room-compiler:$room_version")
+
+    jUnit = dependencies.create("junit:junit:$junit_version")
+
+    extJUnit = dependencies.create("androidx.test.ext:junit:$ext_junit_version")
+
+    kaspresso = [
+            dependencies.create("androidx.test.espresso:espresso-core:$espresso_version"),
+            dependencies.create("com.kaspersky.android-components:kaspresso:$kaspresso_version")
+    ]
+
+    mockito = [
+            dependencies.create("org.mockito:mockito-core:$mockito_version"),
+            dependencies.create("org.mockito:mockito-inline:$mockito_version"),
+            dependencies.create("com.nhaarman.mockitokotlin2:mockito-kotlin:$mockito_kotlin_version")
+    ]
+
+    coroutinesTest = dependencies.create("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_test_version")
 
 }

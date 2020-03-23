@@ -8,7 +8,7 @@ import org.junit.runner.RunWith
 import org.junit.Rule
 
 @RunWith(AndroidJUnit4::class)
-class SimpleTest : TestCase() {
+class CurrencyExchangeInstrumentedTest : TestCase() {
 
     @get:Rule
     val activityTestRule = ActivityTestRule(CurrenciesActivity::class.java, true, false)
