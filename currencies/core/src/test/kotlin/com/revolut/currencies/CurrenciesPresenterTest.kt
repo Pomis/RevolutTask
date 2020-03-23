@@ -35,10 +35,13 @@ class CurrenciesPresenterTest {
     }
 
     @Test
-    fun `Presenter inits and loads currency list`() {
+    fun `Needed amount of currencies is loaded`() {
         sut.init()
-        verify(view).init(eq(sut))
-        assert(sut.currenciesCount == 3)
+        inOrder(view) {
+            verify(view).init(eq(sut))
+            assert(sut.currenciesCount == 3)
+            assert(sut.currenciesCount != 4)
+        }
     }
 
     fun <T : Any, R> KStubbing<T>.onAsync(m: suspend T.() -> R) = runBlocking { whenever(mock.m()) }

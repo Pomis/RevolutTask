@@ -1,3 +1,4 @@
+apply plugin: 'com.android.library'
 apply from: rootProject.file('android-common.gradle')
 
 dependencies {
